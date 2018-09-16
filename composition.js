@@ -1,10 +1,13 @@
-
 var fs = require('fs')
-var options = fs.readFileSync('cookies.txt')
+
+///////////////
+// RELEASE 0 //
+///////////////
+
+// all cookie material
+const options = fs.readFileSync('cookies.txt')
     .toString()
     .split("\n")
-
-console.log(options)
 
 // ['peanut butter',
 // 'chocolate chip',
@@ -65,9 +68,39 @@ class CookieFactory {
 
             result.push(tempResult);
         }
-        console.log(result);
+        return result;
     }
 }
 
+let cookieList = CookieFactory.create(options);
+// console.log(cookieList);
 
-CookieFactory.create(options);
+// console.log(cookieList);
+
+///////////////
+// RELEASE 1 //
+///////////////
+
+// parsing and importing the file
+
+const recipeJSON = fs.readFileSync('recipe.json');
+const recipe = JSON.parse(recipeJSON);
+let result = [];
+
+// displaying sugar free cakes
+for (i in recipe) {
+    let sugar = false;
+
+    if (recipe[i].sugar !== undefined) {
+        sugar = true;
+    }
+
+    if (sugar === false) {
+        result.push(recipe[i].name);
+    }
+}
+
+console.log('Sugar free cakes are:');
+for (i in result) {
+    console.log(result[i]);
+}
